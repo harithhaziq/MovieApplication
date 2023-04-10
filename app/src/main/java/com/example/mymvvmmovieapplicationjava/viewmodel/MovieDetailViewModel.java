@@ -40,20 +40,12 @@ public class MovieDetailViewModel extends ViewModel {
             public void onResponse(Call<MovieDetail> call, Response<MovieDetail> response) {
                 if(response.isSuccessful()){
                     movieDetail.postValue(response.body());
-                    Log.d("HAZIQ", "onResponse GetMovieById: " + response.isSuccessful());
-                }else{
-                    try {
-                        Log.d("HAZIQ", "onResponse GetMovieById: " + response.errorBody().string());
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
                 }
             }
 
             @Override
             public void onFailure(Call<MovieDetail> call, Throwable t) {
                 movieDetail.postValue(null);
-                Log.d("HAZIQ", "onFailure GetMovieById: " + t.getMessage());
             }
         });
     }

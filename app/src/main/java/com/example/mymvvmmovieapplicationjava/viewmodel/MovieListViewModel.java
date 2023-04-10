@@ -44,14 +44,12 @@ public class MovieListViewModel extends ViewModel {
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
                 if(response.isSuccessful()){
                     moviesResponse.postValue(response.body());
-                    Log.d("HAZIQ", "onResponse: " + response.isSuccessful());
                 }
             }
 
             @Override
             public void onFailure(Call<JsonResponse> call, Throwable t) {
                 moviesResponse.postValue(null);
-                Log.d("HAZIQ", "onFailure: " + t.getMessage());
             }
         });
     }
@@ -68,14 +66,12 @@ public class MovieListViewModel extends ViewModel {
                     if(response.isSuccessful() && response.body().getResults()!= null){
                         currentData.getResults().addAll(response.body().getResults());
                         moviesResponse.setValue(currentData);
-                        Log.d("HAZIQ", "onResponse: " + response.isSuccessful());
                     }
                 }
 
                 @Override
                 public void onFailure(Call<JsonResponse> call, Throwable t) {
                     moviesResponse.postValue(null);
-                    Log.d("HAZIQ", "onFailure: " + t.getMessage());
                 }
             });
 
@@ -91,7 +87,6 @@ public class MovieListViewModel extends ViewModel {
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
                 if(response.isSuccessful()){
                     moviesResponse.setValue(response.body());
-                    Log.d("HAZIQ", "onResponse: " + response.isSuccessful());
                     Toast.makeText(context, "Refreshed !", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -99,7 +94,6 @@ public class MovieListViewModel extends ViewModel {
             @Override
             public void onFailure(Call<JsonResponse> call, Throwable t) {
                 moviesResponse.postValue(null);
-                Log.d("HAZIQ", "onFailure: " + t.getMessage());
                 Toast.makeText(context, "Oops !", Toast.LENGTH_SHORT).show();
             }
         });

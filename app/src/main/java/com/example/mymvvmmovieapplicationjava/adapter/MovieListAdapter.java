@@ -53,7 +53,6 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MyVi
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("HAZIQ", "onClick: " + holder.getPosition());
                 int position = holder.getPosition();
                 if (position != RecyclerView.NO_POSITION) {
                     Result movie = movieResponse.getResults().get(position);
