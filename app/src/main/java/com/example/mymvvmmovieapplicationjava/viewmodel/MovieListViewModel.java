@@ -1,7 +1,10 @@
 package com.example.mymvvmmovieapplicationjava.viewmodel;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -81,14 +84,15 @@ public class MovieListViewModel extends ViewModel {
 
     }
 
-    public void refreshMovie() {
-        Call<JsonResponse> call = movieService.getMovieList(Utils.getHeadersMap(), APIService.AUTHORIZATION_HEADER_VALUE, Utils.getLanguage(), 3);
+    public void refreshMovie(Context context) {
+        Call<JsonResponse> call = movieService.getMovieList(Utils.getHeadersMap(), APIService.AUTHORIZATION_HEADER_VALUE, Utils.getLanguage(), 1);
         call.enqueue(new Callback<JsonResponse>() {
             @Override
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
                 if(response.isSuccessful()){
                     moviesResponse.setValue(response.body());
                     Log.d("HAZIQ", "onResponse: " + response.isSuccessful());
+                    Toast.makeText(context, "Refreshed !", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -96,6 +100,7 @@ public class MovieListViewModel extends ViewModel {
             public void onFailure(Call<JsonResponse> call, Throwable t) {
                 moviesResponse.postValue(null);
                 Log.d("HAZIQ", "onFailure: " + t.getMessage());
+                Toast.makeText(context, "Oops !", Toast.LENGTH_SHORT).show();
             }
         });
     }

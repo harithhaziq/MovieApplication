@@ -1,7 +1,9 @@
 package com.example.mymvvmmovieapplicationjava.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,15 +11,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.mymvvmmovieapplicationjava.MoviesDetailActivity;
 import com.example.mymvvmmovieapplicationjava.R;
 import com.example.mymvvmmovieapplicationjava.model.Movie.JsonResponse;
+import com.example.mymvvmmovieapplicationjava.model.Movie.Result;
 import com.example.mymvvmmovieapplicationjava.network.APIService;
-
-import java.util.List;
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MyViewHolder> {
 
@@ -46,6 +50,21 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MyVi
         holder.tvTitle.setText(this.movieResponse.getResults().get(position).getTitle());
         holder.tvTitle.setTextColor(Color.WHITE);
         holder.tvTitle.setShadowLayer(1.6f,1.5f,1.3f,Color.BLACK);
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("HAZIQ", "onClick: " + holder.getPosition());
+                int position = holder.getPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    Result movie = movieResponse.getResults().get(position);
+                    int movieId = movie.getId();
+
+                    Intent intent = new Intent(context.getApplicationContext(), MoviesDetailActivity.class);
+                    intent.putExtra("movieId", movieId);
+                    context.startActivity(intent);
+                }
+            }
+        });
 
         holder.tvRating.setText(String.valueOf(this.movieResponse.getResults().get(position).getVoteAverage()) + " *");
         setTvRatingColor(holder.tvRating, movieResponse.getResults().get(position).getVoteAverage());

@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
-        swipeRefreshLayout.setOnRefreshListener(() -> viewModel.refreshMovie());
+        swipeRefreshLayout.setOnRefreshListener(() -> viewModel.refreshMovie(this));
 
 
         viewModel = ViewModelProviders.of(this).get(MovieListViewModel.class);
